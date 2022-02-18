@@ -17,6 +17,7 @@ build:
   stage: build
   variables:
     npm_config_cache: "$CI_PROJECT_DIR/.npm"
+    CI: "false"
 #    GENERATE_SOURCEMAP: "true"
 #    SENTRY_PROJECT: "upfi_world_client"
 #    SENTRY_ORG: "upfi"
