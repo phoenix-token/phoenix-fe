@@ -1,25 +1,31 @@
+import Header from 'component/header/Header';
+import Sidebar from 'component/sidebar/Sidebar';
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Bond from 'screen/bond/Bond';
+import BondDetail from 'screen/bond/BondDetail';
+import Staking from 'screen/staking/Staking';
 import './App.css';
+import Demo from './screen/demo/Demo';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <div className='main'>
+        <Sidebar />
+        <div className='page'>
+          <div className='content'>
+            <Switch>
+              <Route path={'/bond/:id'} component={BondDetail} />
+              <Route path={'/bond'} component={Bond} />
+              <Route path={'/demo'} component={Demo} />
+              <Route path={'/'} component={Staking} />
+            </Switch>
+          </div>
+        </div>
+      </div>
+    </Router>
   );
 }
 

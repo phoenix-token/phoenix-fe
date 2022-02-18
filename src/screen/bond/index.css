@@ -1,0 +1,85 @@
+.bond-item {
+    background: rgba(7, 6, 90, 0.48);
+    border: 2px solid #01154E;
+    backdrop-filter: blur(6px);
+    border-radius: 8px;
+    padding: 24px;
+}
+.bond-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.bond-item-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+}
+.bond-item-token {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: #FFFFFF;
+}
+.bond-btn {
+    cursor: pointer;
+    width: fit-content;
+    height: 38px;
+    padding: 0 16px;
+    background: #009784;
+    border-radius: 39px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.bond-detail-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+}
+.bond-detail-header > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.bond-detail-header > div > span:first-child{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: #A2A2B5;
+}
+.bond-detail-header > div > span:nth-child(2){
+    display: block;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #17D964;
+}
+.bond-content {
+    background: #07065A;
+    border: 2px solid #01154E;
+    border-radius: 8px;
+}
+.width-100 {
+    width: 100%;
+}
+.bond-title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 24px;
+    color: #FFFFFF;
+}

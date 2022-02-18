@@ -1,0 +1,182 @@
+.stake-header > div:first-child{
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: #FFFFFF;
+}
+.stake-header > div:nth-child(2){
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    color: #FFFFFF;
+}
+.stake-tvd {
+    width: 100%;
+    display: flex;
+    margin: 20px 0px;
+}
+.stake-tvd > div:first-child {
+    margin-right: 60px;
+}
+.tvd-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: #A2A2B5;
+}
+
+.tvd-value {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #17D964;
+}
+.stake-main {
+    width: 100%;
+    height: auto;
+    background: rgba(19, 7, 94, 0.48);
+    border-radius: 8px;
+}
+.tabs {
+    height: 54px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #01154E;
+}
+.tab {
+    margin-top: 16px;
+    cursor: pointer;
+    flex: 1;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #01F7D8;
+    border-bottom: 2px solid transparent;
+    color: #A2A2B5;
+    margin-bottom: -2px;
+
+}
+.tab-active {
+    border-bottom: 2px solid #01F7D8;
+    color: #fff
+}
+.input-amount {
+    background: #080828;
+    border-radius: 8px;
+    padding: 16px 24px;
+    margin-top: 16px;
+}
+.input-logo {
+    width: 24px;
+    height: 24px;
+    margin: 0 8px;
+}
+.input-top {
+    width: 100%;
+    display: flex;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: right;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.input-top > span:first-child {
+    color: #BEBEC9
+}
+.input-top > span:nth-child(2) {
+    color: #7ACFFF
+}
+.input-number {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.flex-max {
+    flex: 1;
+    margin-right: 8px;
+}
+.half {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 22px;
+    color: #7ACFFF;
+    text-transform: uppercase;
+}
+.token-name {
+    font-size: 14px;
+    line-height: 22px;
+    color: #fff;
+}
+.number-format {
+    background: transparent;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: #FFFFFF;
+    border: none;
+    max-width: 200px;
+}
+.tab-content {
+    padding: 24px;
+}
+.select-time {
+    background: #19193A;
+    margin-top: -8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: #01F7D8;
+    height: 34px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px;
+    align-items: center;
+}
+
+.staking-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #BEBABF;
+    margin: 8px 0;
+}
+.staking-margin {
+    margin: 16px 0;
+}
+.btn {
+    cursor: pointer;
+    padding: 12px 24px;
+    width: 406px;
+    height: 46px;
+    left: 24px;
+    top: 415px;
+    background: #DD5B11;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.staked {
+    margin-top: 16px;
+    padding: 24px;
+    background: rgba(19, 7, 94, 0.48);
+    border-radius: 8px;
+}
+.unstake-text {
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+}

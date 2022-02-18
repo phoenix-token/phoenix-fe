@@ -1,0 +1,28 @@
+.header {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    height: 72px;
+    background-color: #070638;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 42px;
+}
+.header > div:first-child {
+    display: flex;
+    align-items: center;
+}
+.header img {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+}
+.app-name {
+    display: block;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    color: #FFFFFF;
+}
