@@ -4,8 +4,8 @@ import { useState } from 'react';
 import NumberFormat from 'react-number-format';
 import Logo from '../../assets/image/logo.png'
 import { useEffect } from 'react';
-import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near } from '../../services/near';
-import { decimalToNumber, numberToDecimals } from 'utils/Util';
+import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near, STAKING_CONTRACT_ID } from '../../services/near';
+import { decimalToNumber, formatCurrency, numberToDecimals } from 'utils/Util';
 
 const Staking = () => {
     const [tab, setTab] = useState(1)
@@ -14,6 +14,7 @@ const Staking = () => {
     const [xTokenStorageBalance, setXtokenStorageBalance] = useState(null)
     const [balance, setBalance] = useState(0)
     const [xBalance, setXBalance] = useState(0)
+    const [metadata, setMetadata] = useState(null)
 
     async function fetchData() {
         if (wallet.isSignedIn()) {
@@ -37,6 +38,10 @@ const Staking = () => {
             const storage_balance = await wallet.account().viewFunction(X_PNX_TOKEN_ID, "storage_balance_of", { "account_id": wallet.getAccountId() });
             console.log("storage_balance", storage_balance)
             setXtokenStorageBalance(storage_balance)
+
+            const meta_data = await wallet.account().viewFunction(STAKING_CONTRACT_ID, 'contract_metadata', { "account_id": wallet.getAccountId() });
+            console.log("meta_data", meta_data)
+            setMetadata(meta_data)
         }
     }
 
@@ -97,8 +102,12 @@ const Staking = () => {
                     <div className='tvd-value'>1,012.45%</div>
                 </div>
                 <div>
-                    <div className='tvd-title'>TVD</div>
-                    <div className='tvd-value'>$19,000,450</div>
+                    <div className='tvd-title'>Total PNX Locked</div>
+                    <div className='tvd-value'>
+                        {
+                           formatCurrency(decimalToNumber(metadata ? metadata.locked_token_amount : '0').toFixed(3))
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -246,7 +255,7 @@ const Staking = () => {
                 </div> */}
                 <div className="staking-row">
                     <span>ROI (5-Day Rate)</span>
-                    <span className="staking-white">{`--`} %</span>
+                    <span className="staking-white">{13} %</span>
                 </div>
             </div>
 

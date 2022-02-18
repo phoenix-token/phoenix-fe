@@ -12,7 +12,7 @@ const Bond = () => {
                 </div>
                 <div>
                     <div className='tvd-title'>PNX Price</div>
-                    <div className='tvd-value'>$15</div>
+                    <div className='tvd-value'>$12</div>
                 </div>
             </div>
             <div>

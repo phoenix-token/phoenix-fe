@@ -24,7 +24,7 @@ export default function getConfig (env?: string) {
         helperUrl: 'https://helper.testnet.near.org',
         DEMO_CONTRACT_ID: 'baunvb.testnet',
         BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet',
+        STAKING_CONTRACT_ID: 'xinca.testnet',
         PNX_TOKEN_ID: 'inca.inti01.testnet',
         X_PNX_TOKEN_ID: 'xinca.testnet'
       }

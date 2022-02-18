@@ -18,7 +18,7 @@ const BondDetail = () => {
             <Modal
                 title={
                     <div className='bond-detail-header'>
-                        <span>{`Bond`}</span>
+                        <span>{`USDT Bond`}</span>
                         <div>
                             <IconButton onClick={() => { history.goBack() }} >
                                 <AiOutlineClose size={20} />

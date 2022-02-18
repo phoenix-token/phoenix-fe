@@ -13,3 +13,8 @@ export const numberToDecimals = (val: number, decimals: number): string => {
     let output = ethers.utils.formatUnits(amount, 0)
     return output
 }
+
+export const formatCurrency = (value: number | string): string => {
+    if (value <= 1) return value + ""
+    return Boolean(value) ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+}

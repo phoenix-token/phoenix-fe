@@ -1,14 +1,14 @@
 import React from 'react'
 import './index.css'
-import Logo from '../../assets/image/logo.png'
+import USDTLogo from '../../assets/image/usdt_logo.svg'
 import { NavLink } from 'react-router-dom'
 const BondItem = () => {
     return (
         <div className='bond-item'>
             <div className='bond-item-header'>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img src={Logo} className='bond-item-logo' />
-                    <span className='bond-item-token'>USDC</span>
+                    <img src={USDTLogo} className='bond-item-logo' />
+                    <span className='bond-item-token'>USDT</span>
                 </div>
                 <NavLink
                     to={'/bond/1'}
