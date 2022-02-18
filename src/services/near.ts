@@ -2,7 +2,6 @@ import { Near, keyStores, utils } from 'near-api-js';
 import getConfig from "../config/config";
 import SpecialWallet from "./SpecialWallet";
 import BN from 'bn.js';
-const amountInYocto = utils.format.parseNearAmount("0.0125");
 
 const config = getConfig('testnet')
 
@@ -70,11 +69,13 @@ export interface StakingViewFunctionOptions {
 export interface StakingFunctionCallOptions extends StakingViewFunctionOptions {
     gas?: string;
     amount?: string;
+    attachedDeposit?: string
 }
 
 export const stakingFunctionCall = ({
     contractId,
     methodName,
+    attachedDeposit,
     args,
     gas,
 }: StakingFunctionCallOptions) => {
@@ -85,7 +86,7 @@ export const stakingFunctionCall = ({
                 contractId,
                 methodName,
                 //@ts-ignore
-                attachedDeposit: amountInYocto,
+                attachedDeposit,
                 args,
                 gas: getGas(gas)
             }
