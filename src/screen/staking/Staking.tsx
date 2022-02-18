@@ -6,7 +6,7 @@ import Logo from '../../assets/image/logo.png'
 import { useEffect } from 'react';
 import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near, STAKING_CONTRACT_ID } from '../../services/near';
 import { decimalToNumber, formatCurrency, numberToDecimals } from 'utils/Util';
-
+import PrimaryButton from '../../component/Button/PrimaryButton'
 const Staking = () => {
     const [tab, setTab] = useState(1)
     const [amountStake, setAmountStake] = useState(0)
@@ -105,7 +105,7 @@ const Staking = () => {
                     <div className='tvd-title'>Total PNX Locked</div>
                     <div className='tvd-value'>
                         {
-                           formatCurrency(decimalToNumber(metadata ? metadata.locked_token_amount : '0').toFixed(3))
+                            formatCurrency(decimalToNumber(metadata ? metadata.locked_token_amount : '0').toFixed(3))
                         }
                     </div>
                 </div>
@@ -196,17 +196,22 @@ const Staking = () => {
 
                                 <div className='btn'
                                     style={{ marginTop: 32 }}
-                                    onClick={() => {
-                                        if (xTokenStorageBalance) {
-                                            deposit()
-                                        } else {
-                                            register()
-                                        }
-                                    }}
                                 >
-                                    {
-                                        xTokenStorageBalance == null ? "Approve" : "Deposit"
-                                    }
+                                    <PrimaryButton
+                                        status={wallet.isSignedIn() ? 'enable' : 'disable'}
+                                        action={() => {
+                                            if (xTokenStorageBalance) {
+                                                deposit()
+                                            } else {
+                                                register()
+                                            }
+                                        }}
+                                    >
+                                        {
+                                            xTokenStorageBalance == null ? "Approve" : "Deposit"
+                                        }
+                                    </PrimaryButton>
+
                                 </div>
                             </div>
                         </div>
@@ -228,10 +233,14 @@ const Staking = () => {
                                     <span style={{ color: "#FF8B37" }}>{`---`} PNX</span>
                                 </div>
                             </div> */}
-                            <div className='btn'
-                                onClick={() => unstake()}
-                            >
-                                Unstake
+
+                            <div className='btn' >
+                                <PrimaryButton
+                                    status={xBalance > 0 ? 'enable' : 'disable'}
+                                    action={() => unstake()}
+                                >
+                                    Unstake
+                            </PrimaryButton>
                             </div>
                         </div>
 
