@@ -5,9 +5,9 @@ import { AiOutlineClose, AiFillSetting } from "react-icons/ai";
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import NumberFormat from 'react-number-format';
-import Logo from '../../assets/image/logo.png'
+import Logo from '../../assets/image/usdt_logo.svg'
 import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near, BONDING_CONTRACT_ID, USDT_TOKEN_ID } from '../../services/near';
-import { decimalToNumber, numberToDecimals } from 'utils/Util';
+import { decimalToNumber, formatTimeString, numberToDecimals } from 'utils/Util';
 import PrimaryButton from 'component/Button/PrimaryButton';
 import CountUp from 'react-countup';
 
@@ -78,9 +78,9 @@ const BondDetail = () => {
 
                 let payout = decimalToNumber(bond_holder.payout_remaining.toString())
                 let vesting = bond_holder.vesting_period / 1000000000
-                let lastTime = decimalToNumber(bond_holder.last_time.toString(), 9) / 1000000000
-                console.log("aaaav", vesting)
-                console.log("aaaal", Date.now() / 1000 - lastTime)
+                let lastTime = decimalToNumber(bond_holder.last_time.toString(), 9)
+                console.log("lastTime", lastTime)
+                console.log("now", Date.now() / 1000)
                 if (vesting != 0) {
                     claimableNow = payout / vesting * (Date.now() / 1000 - lastTime)
                     claimable5Mins = payout / vesting * (dump5Mins - lastTime)
@@ -234,8 +234,8 @@ const BondDetail = () => {
                                             <span>Claimable Rewards</span>
                                             <span>
                                                 <CountUp
-                                                    start={bondHolder.claimableNow}
-                                                    end={bondHolder.claimable5Mins}
+                                                    start={bondHolder ? bondHolder.claimableNow : 0}
+                                                    end={bondHolder ? bondHolder.claimable5Mins : 0}
                                                     decimals={6}
                                                     duration={300} //5min in second
                                                     separator={','}
@@ -250,7 +250,9 @@ const BondDetail = () => {
                                         </div>
                                         <div className="staking-row">
                                             <span>Time until fully vested</span>
-                                            <span className="staking-white">---</span>
+                                            <span className="staking-white">
+                                                {formatTimeString(bondHolder ? (bondHolder.lastTime + bondHolder.vesting) : 0)}
+                                            </span>
                                         </div></>
                             }
                             <div className="staking-row">
