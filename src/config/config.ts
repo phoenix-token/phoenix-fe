@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME || 'baunvb.testnet'; /* TODO: change this to your account */
+const CONTRACT_NAME = process.env.CONTRACT_NAME || 'token.testnet'; /* TODO: change this to your account */
 
 export default function getConfig (env?: string) {
   switch (env) {
@@ -10,9 +10,9 @@ export default function getConfig (env?: string) {
         contractName: CONTRACT_NAME,
         walletUrl: 'https://wallet.near.org',
         helperUrl: 'https://helper.mainnet.near.org',
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'token.testnet',
+        STAKING_CONTRACT_ID: 'token.testnet'
       }
     case 'development':
     case 'testnet':
@@ -22,11 +22,12 @@ export default function getConfig (env?: string) {
         contractName: CONTRACT_NAME,
         walletUrl: 'https://wallet.testnet.near.org',
         helperUrl: 'https://helper.testnet.near.org',
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'xinca.testnet',
-        PNX_TOKEN_ID: 'inca.inti01.testnet',
-        X_PNX_TOKEN_ID: 'xinca.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'bond.zus.testnet',
+        STAKING_CONTRACT_ID: 'xpnx.testnet',
+        PNX_TOKEN_ID: 'pnx.zus.testnet',
+        X_PNX_TOKEN_ID: 'xpnx.testnet',
+        USDT_TOKEN_ID: 'usdt_test.zus.testnet'
       }
     case 'betanet':
       return {
@@ -35,9 +36,9 @@ export default function getConfig (env?: string) {
         contractName: CONTRACT_NAME,
         walletUrl: 'https://wallet.betanet.near.org',
         helperUrl: 'https://helper.betanet.near.org',
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'token.testnet',
+        STAKING_CONTRACT_ID: 'token.testnet'
       }
     case 'local':
       return {
@@ -46,9 +47,9 @@ export default function getConfig (env?: string) {
         keyPath: `${process.env.HOME}/.near/validator_key.json`,
         walletUrl: 'http://localhost:4000/wallet',
         contractName: CONTRACT_NAME,
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'token.testnet',
+        STAKING_CONTRACT_ID: 'token.testnet'
       }
     case 'test':
     case 'ci':
@@ -57,9 +58,9 @@ export default function getConfig (env?: string) {
         nodeUrl: 'https://rpc.ci-testnet.near.org',
         contractName: CONTRACT_NAME,
         masterAccount: 'test.near',
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'token.testnet',
+        STAKING_CONTRACT_ID: 'token.testnet'
       }
     case 'ci-betanet':
       return {
@@ -67,9 +68,9 @@ export default function getConfig (env?: string) {
         nodeUrl: 'https://rpc.ci-betanet.near.org',
         contractName: CONTRACT_NAME,
         masterAccount: 'test.near',
-        DEMO_CONTRACT_ID: 'baunvb.testnet',
-        BONDING_CONTRACT_ID: 'baunvb.testnet',
-        STAKING_CONTRACT_ID: 'baunvb.testnet'
+        DEMO_CONTRACT_ID: 'token.testnet',
+        BONDING_CONTRACT_ID: 'token.testnet',
+        STAKING_CONTRACT_ID: 'token.testnet'
       }
     default:
       throw Error(`Unconfigured environment '${env}'. Can be configured in src/config.js.`)

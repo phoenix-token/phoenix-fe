@@ -15,6 +15,8 @@ export const DEMO_CONTRACT_ID = config.DEMO_CONTRACT_ID
 export const PNX_TOKEN_ID = config.PNX_TOKEN_ID
 export const X_PNX_TOKEN_ID = config.X_PNX_TOKEN_ID
 export const STAKING_CONTRACT_ID = config.STAKING_CONTRACT_ID
+export const BONDING_CONTRACT_ID = config.BONDING_CONTRACT_ID
+export const USDT_TOKEN_ID = config.USDT_TOKEN_ID
 export const APP_KEY_PREFIX = 'bond-staking-app'
 export const wallet = new SpecialWallet(near, APP_KEY_PREFIX);
 

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near, STAKING_CONTRACT_ID } from '../../services/near';
 import { decimalToNumber, formatCurrency, numberToDecimals } from 'utils/Util';
 import PrimaryButton from '../../component/Button/PrimaryButton'
+import { utils } from 'near-api-js';
 const Staking = () => {
     const [tab, setTab] = useState(1)
     const [amountStake, setAmountStake] = useState(0)
@@ -16,31 +17,19 @@ const Staking = () => {
     const [xBalance, setXBalance] = useState(0)
     const [metadata, setMetadata] = useState(null)
 
+
+
     async function fetchData() {
         if (wallet.isSignedIn()) {
-            console.log("balance::", wallet.getAccountId())
             let pnx_balance = await wallet.account().viewFunction(PNX_TOKEN_ID, "ft_balance_of", { "account_id": wallet.getAccountId() });
             let x_pnx_balance = await wallet.account().viewFunction(X_PNX_TOKEN_ID, "ft_balance_of", { "account_id": wallet.getAccountId() });
-
-            console.log("x_pnx_balance", pnx_balance)
-            console.log("x_pnx_balance", x_pnx_balance)
-
             setBalance(decimalToNumber(pnx_balance))
             setXBalance(decimalToNumber(x_pnx_balance))
-
-            let metadata = await wallet.account().viewFunction(PNX_TOKEN_ID, "ft_metadata");
-            console.log("PNX token data::", metadata)
-            let metadatax = await wallet.account().viewFunction(X_PNX_TOKEN_ID, "ft_metadata");
-            console.log("xPNX token data::", metadatax)
-            let txResult = await near.connection.provider.txStatus('CYUHUohoWffkZjStt2btLjogm8zdS9oUs7PaZ2nvVpz3', wallet.getAccountId())
-            console.log('txResult:::', txResult)
-
             const storage_balance = await wallet.account().viewFunction(X_PNX_TOKEN_ID, "storage_balance_of", { "account_id": wallet.getAccountId() });
-            console.log("storage_balance", storage_balance)
             setXtokenStorageBalance(storage_balance)
 
             const meta_data = await wallet.account().viewFunction(STAKING_CONTRACT_ID, 'contract_metadata', { "account_id": wallet.getAccountId() });
-            console.log("meta_data", meta_data)
+            console.log('meta_data', meta_data)
             setMetadata(meta_data)
         }
     }

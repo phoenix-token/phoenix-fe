@@ -6,7 +6,6 @@ import Bond from 'screen/bond/Bond';
 import BondDetail from 'screen/bond/BondDetail';
 import Staking from 'screen/staking/Staking';
 import './App.css';
-import Demo from './screen/demo/Demo';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
             <Switch>
               <Route path={'/bond/:id'} component={BondDetail} />
               <Route path={'/bond'} component={Bond} />
-              <Route path={'/demo'} component={Demo} />
               <Route path={'/'} component={Staking} />
             </Switch>
           </div>

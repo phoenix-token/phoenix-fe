@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Modal, Tabs } from 'antd';
 import IconButton from 'component/Button/IconButton';
 import { AiOutlineClose, AiFillSetting } from "react-icons/ai";
@@ -6,11 +6,117 @@ import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import Logo from '../../assets/image/logo.png'
+import { wallet, PNX_TOKEN_ID, X_PNX_TOKEN_ID, near, BONDING_CONTRACT_ID, USDT_TOKEN_ID } from '../../services/near';
+import { decimalToNumber, numberToDecimals } from 'utils/Util';
+import PrimaryButton from 'component/Button/PrimaryButton';
+import CountUp from 'react-countup';
 
 const BondDetail = () => {
     const history = useHistory()
     const [tab, setTab] = useState(1)
     const [amountBond, setAmountBond] = useState(0)
+    const [usdtBalance, setUSDTBalance] = useState(0)
+    const [bondPrice, setBondPrice] = useState(0)
+    const [bondHolder, setBondHolder] = useState(null)
+
+    const claim = () => {
+        wallet.account().functionCall({
+            contractId: BONDING_CONTRACT_ID,
+            methodName: "redeem",
+            args: {
+                token_payment: USDT_TOKEN_ID,
+            },
+            //@ts-ignore
+            gas: "300000000000000",
+        });
+    }
+
+    const deposit = () => {
+        wallet.account().functionCall({
+            contractId: USDT_TOKEN_ID,
+            methodName: "ft_transfer_call",
+            args: {
+                receiver_id: "bond.zus.testnet",
+                amount: numberToDecimals(amountBond, 18),
+                msg: "",
+            },
+            //@ts-ignore
+            attachedDeposit: '1',
+            //@ts-ignore
+            gas: "300000000000000",
+        });
+    }
+
+    const getROI = () => {
+        if (bondPrice > 0) {
+            return ((1.2 / bondPrice - 1) * 100).toFixed(3)
+        } else {
+            return '--'
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    async function fetchData() {
+        if (wallet.isSignedIn()) {
+            let usdt_balance = await wallet.account().viewFunction(USDT_TOKEN_ID, "ft_balance_of", { "account_id": wallet.getAccountId() });
+            console.log("usdt_balance:", usdt_balance)
+            setUSDTBalance(decimalToNumber(usdt_balance))
+
+            const bond_holder = await wallet.account().viewFunction(BONDING_CONTRACT_ID, "get_bond_holder", {
+                token_payment: "usdt_test.zus.testnet",
+                sender: wallet.getAccountId(),
+            });
+
+            if (bond_holder) {
+                console.log(bond_holder)
+                let dump5Mins = Date.now() / 1000 + 300
+                let claimableNow = 0
+                let claimable5Mins = 0
+
+                let payout = decimalToNumber(bond_holder.payout_remaining.toString())
+                let vesting = bond_holder.vesting_period / 1000000000
+                let lastTime = decimalToNumber(bond_holder.last_time.toString(), 9) / 1000000000
+                console.log("aaaav", vesting)
+                console.log("aaaal", Date.now() / 1000 - lastTime)
+                if (vesting != 0) {
+                    claimableNow = payout / vesting * (Date.now() / 1000 - lastTime)
+                    claimable5Mins = payout / vesting * (dump5Mins - lastTime)
+                    if (claimableNow > payout) claimableNow = payout
+                    if (claimable5Mins > payout) claimable5Mins = payout
+                }
+
+                //{"value_remaining":12000000000000000000,
+                // "payout_remaining":12000000000000000000,
+                // "vesting_period":18000,
+                // "last_time":1645412624102066988,
+                // "price_paid":1000000000000000000}
+
+                setBondHolder({
+                    payout,
+                    vesting,
+                    lastTime,
+                    pricePaid: 0,
+                    claimableNow,
+                    claimable5Mins,
+                })
+            }
+
+            console.log(bond_holder)
+        }
+
+        const bond_price = await wallet.account().viewFunction(BONDING_CONTRACT_ID, "get_bond_price",
+            {
+                token_payment: USDT_TOKEN_ID,
+                token_pure_supply: "30000000000000000000",
+            });
+        console.log(bond_price)
+        setBondPrice(decimalToNumber(bond_price.toString()))
+
+
+    }
 
     return (
         <div>
@@ -20,7 +126,7 @@ const BondDetail = () => {
                     <div className='bond-detail-header'>
                         <span>{`USDT Bond`}</span>
                         <div>
-                            <IconButton onClick={() => { history.goBack() }} >
+                            <IconButton onClick={() => { history.push('/bond') }} >
                                 <AiOutlineClose size={20} />
                             </IconButton>
                         </div>
@@ -29,7 +135,7 @@ const BondDetail = () => {
                 closable={false}
                 visible={true}
                 onCancel={() => { }}
-                width={600}
+                width={500}
                 footer={null}
                 centered
             >
@@ -38,11 +144,11 @@ const BondDetail = () => {
                         <div className="bond-detail-header" style={{ margin: '16px auto 32px auto', maxWidth: 400 }}>
                             <div>
                                 <span>Bond Price</span>
-                                <span>$10</span>
+                                <span>${bondPrice}</span>
                             </div>
                             <div>
                                 <span>Market Price</span>
-                                <span>$12</span>
+                                <span>$1.2</span>
                             </div>
                         </div>
                         <div className='bond-content'>
@@ -58,8 +164,8 @@ const BondDetail = () => {
                                                 <div className='input-top'>
                                                     <span>Input</span>
                                                     <span onClick={() => {
-                                                        setAmountBond(1000000)
-                                                    }}>Balance: {100000}</span>
+                                                        setAmountBond(usdtBalance)
+                                                    }}>Balance: {usdtBalance}</span>
                                                 </div>
                                                 <div className='input-number'>
                                                     <NumberFormat
@@ -73,22 +179,31 @@ const BondDetail = () => {
                                                     />
                                                     <div>
                                                         <span className='half' onClick={() => {
-                                                            setAmountBond(500000)
+                                                            setAmountBond(usdtBalance / 2)
                                                         }}>Half</span>
                                                         <img src={Logo} className='input-logo' />
-                                                        <span className='token-name'>PNX</span>
+                                                        <span className='token-name'>USDT</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='btn' style={{ width: '100%', marginTop: '30px' }}>
-                                                Bond
+                                                <PrimaryButton
+                                                    status={'enable'}
+                                                    action={() => deposit()}
+                                                >
+                                                    Bond
+                                                </PrimaryButton>
                                             </div>
                                         </div>
                                         :
                                         <div className='tab-content'>
-
                                             <div className='btn' style={{ width: '100%' }}>
-                                                Claim
+                                                <PrimaryButton
+                                                    status={'enable'}
+                                                    action={() => claim()}
+                                                >
+                                                    Claim
+                                                </PrimaryButton>
                                             </div>
                                         </div>
                                 }
@@ -101,7 +216,7 @@ const BondDetail = () => {
                                         <div className="staking-row">
                                             <span>You Will Get</span>
                                             <span className="staking-white">
-                                                1000 PNX
+                                                {amountBond / bondPrice} PNX
                                             </span>
                                         </div>
                                     </>
@@ -110,12 +225,28 @@ const BondDetail = () => {
                                         <div className="staking-row">
                                             <span>Pending Rewards</span>
                                             <span className="staking-white">
-                                                1000 PNX
+                                                {
+                                                    bondHolder ? bondHolder.payout : 0
+                                                } PNX
                                             </span>
                                         </div>
                                         <div className="staking-row">
                                             <span>Claimable Rewards</span>
-                                            <span className="staking-white">20 PNX</span>
+                                            <span>
+                                                <CountUp
+                                                    start={bondHolder.claimableNow}
+                                                    end={bondHolder.claimable5Mins}
+                                                    decimals={6}
+                                                    duration={300} //5min in second
+                                                    separator={','}
+                                                >
+                                                    {({ countUpRef }) => (
+                                                        <div>
+                                                            <span ref={countUpRef} /> PNX
+                                                        </div>
+                                                    )}
+                                                </CountUp>
+                                            </span>
                                         </div>
                                         <div className="staking-row">
                                             <span>Time until fully vested</span>
@@ -124,7 +255,7 @@ const BondDetail = () => {
                             }
                             <div className="staking-row">
                                 <span>ROI</span>
-                                <span className="staking-white">10%</span>
+                                <span className="staking-white">{getROI()}%</span>
                             </div>
                             <div className="staking-row">
                                 <span>Vesting Term</span>
