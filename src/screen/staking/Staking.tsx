@@ -29,7 +29,6 @@ const Staking = () => {
             setXtokenStorageBalance(storage_balance)
 
             const meta_data = await wallet.account().viewFunction(STAKING_CONTRACT_ID, 'contract_metadata', { "account_id": wallet.getAccountId() });
-            console.log('meta_data', meta_data)
             setMetadata(meta_data)
         }
     }

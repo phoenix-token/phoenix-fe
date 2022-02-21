@@ -14,7 +14,6 @@ const Bond = () => {
             {
                 token_payment: USDT_TOKEN_ID,
             });
-        console.log(purchased)
         setPurchased(decimalToNumber(purchased.toString()))
     }
     return (

@@ -18,7 +18,7 @@ export default function getConfig (env?: string) {
     case 'testnet':
       return {
         networkId: 'testnet',
-        nodeUrl: 'https://rpc.testnet.near.org',
+        nodeUrl: 'https://near-testnet--rpc.datahub.figment.io/apikey/81353c3668c33d59ff8d7f76499a8e09',
         contractName: CONTRACT_NAME,
         walletUrl: 'https://wallet.testnet.near.org',
         helperUrl: 'https://helper.testnet.near.org',

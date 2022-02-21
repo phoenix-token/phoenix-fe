@@ -62,7 +62,6 @@ const BondDetail = () => {
     async function fetchData() {
         if (wallet.isSignedIn()) {
             let usdt_balance = await wallet.account().viewFunction(USDT_TOKEN_ID, "ft_balance_of", { "account_id": wallet.getAccountId() });
-            console.log("usdt_balance:", usdt_balance)
             setUSDTBalance(decimalToNumber(usdt_balance))
 
             const bond_holder = await wallet.account().viewFunction(BONDING_CONTRACT_ID, "get_bond_holder", {
@@ -71,7 +70,6 @@ const BondDetail = () => {
             });
 
             if (bond_holder) {
-                console.log(bond_holder)
                 let dump5Mins = Date.now() / 1000 + 300
                 let claimableNow = 0
                 let claimable5Mins = 0
@@ -79,8 +77,6 @@ const BondDetail = () => {
                 let payout = decimalToNumber(bond_holder.payout_remaining.toString())
                 let vesting = bond_holder.vesting_period / 1000000000
                 let lastTime = decimalToNumber(bond_holder.last_time.toString(), 9)
-                console.log("lastTime", lastTime)
-                console.log("now", Date.now() / 1000)
                 if (vesting != 0) {
                     claimableNow = payout / vesting * (Date.now() / 1000 - lastTime)
                     claimable5Mins = payout / vesting * (dump5Mins - lastTime)
@@ -104,7 +100,6 @@ const BondDetail = () => {
                 })
             }
 
-            console.log(bond_holder)
         }
 
         const bond_price = await wallet.account().viewFunction(BONDING_CONTRACT_ID, "get_bond_price",
@@ -112,7 +107,6 @@ const BondDetail = () => {
                 token_payment: USDT_TOKEN_ID,
                 token_pure_supply: "30000000000000000000",
             });
-        console.log(bond_price)
         setBondPrice(decimalToNumber(bond_price.toString()))
 
 

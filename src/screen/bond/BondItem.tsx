@@ -29,14 +29,12 @@ const BondItem = () => {
                 token_payment: USDT_TOKEN_ID,
                 token_pure_supply: "30000000000000000000",
             });
-        console.log(bond_price)
         setBondPrice(decimalToNumber(bond_price.toString()))
 
         const purchased = await wallet.account().viewFunction(BONDING_CONTRACT_ID, "get_total_deposit",
             {
                 token_payment: USDT_TOKEN_ID,
             });
-        console.log(purchased)
         setPurchased(decimalToNumber(purchased.toString()))
     }
 
